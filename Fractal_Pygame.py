@@ -116,7 +116,7 @@ while(gameLoop):
     window.blit(pt2, (680, 0))
 
     #pygame.draw.line(window, green, (coorArrX[0], coorArrY[0]), (coorArrX[n-1], coorArrY[n-1]), 1)
-    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 3, 3)
+    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 4, 3)
 
     for p in range(n):
         x = coorArrX[p]
