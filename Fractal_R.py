@@ -34,14 +34,14 @@ class Fractal:
         if order <= 0 or polygon < 2:                  # The base case is just a straight line
             t.forward(size)
         else:
-            self.koch(t, order-1, size/3, polygon)   # go 1/n of the way
+            self.koch(t, order-1, float(size/3), polygon)   # go 1/n of the way
             t.left(angle)
-            self.koch(t, order-1, size/3, polygon)
+            self.koch(t, order-1, float(size/3), polygon)
             for i in range(polygon-2):
                 t.right(180.0 - angle)
-                self.koch(t, order-1, size/3, polygon)
+                self.koch(t, order-1, float(size/3), polygon)
             t.left(angle)
-            self.koch(t, order-1, size/3, polygon)
+            self.koch(t, order-1, float(size/3), polygon)
 
     def draw(self):
         self.t.reset()

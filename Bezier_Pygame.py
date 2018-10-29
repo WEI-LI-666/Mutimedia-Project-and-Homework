@@ -1,9 +1,7 @@
 # Random Bezier Curve using De Casteljau's algorithm
 # http://en.wikipedia.org/wiki/Bezier_curve
 # http://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
-# FB - 201111244
 import random, pygame, cmath
-from PIL import Image, ImageDraw
 
 pygame.init()
 window = pygame.display.set_mode((800, 600))
@@ -21,11 +19,6 @@ sel1=0
 sel2=0
 sel3=0
 sel4=0
-
-#imgx = 800
-#imgy = 800
-#image = Image.new("RGB", (imgx, imgy))
-#draw = ImageDraw.Draw(image)
 
 def B(coorArr, i, j, t):
     if j == 0:
