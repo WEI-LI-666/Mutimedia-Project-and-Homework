@@ -17,29 +17,67 @@ sel = []
 sel1=0
 sel2=0
 
-def Fractal(x1, x2, y1, y2, polygon, level):
-    pt = np.zeros((5, 2))
+n = 2
+for i in range(n):
+    sel.append(0)
+    
+coorArrX = [100, 700]
+coorArrY = [300, 300]
+
+def Fractal(x1, y1, x2, y2, polygon, level):
+    p = np.zeros((polygon, 2))
+    angle = (polygon - 2) * 180.
+    fix_angle = float(angle / polygon)
     if polygon < 3:
         polygon = 0
-    if level < 2:
-        level = 0
-    pt[0] = [x1, y1]
-    pt[polygon + 1] = [x2, y2]
-    for i in range(1, polygon):
-        pt[i] = (pt[0] + pt[polygon+1]) * (1.0/polygon) * i
     if polygon == 0 or level == 0:
-        pygame.draw.line(window, green, pt[0], pt[polygon+1], 1)
+        pygame.draw.line(window, green, [x1, y1], [x2,y2], 2)
 
-    return Fractal(p[0])
+    for i in range(polygon):
+        if i == 0:
+            p[i] = [(2. * x1 + x2) / 3., (2. * y1 + y2) / 3.]
+        if i == polygon - 1:
+            p[i] = [(x1 + 2. * x2) / 3., (y1 + 2. * y2) / 3.]
+        if i != 0 and i != polygon - 1:
+            A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle)), (-1./polygon) * math.sin(math.radians(fix_angle))], 
+                            [(-1./polygon) * math.sin(math.radians(fix_angle)), (-1./polygon) * math.cos(math.radians(fix_angle))]])
+            if x2 <= x1 and y2 <= y1:
+                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle + 180.)), (-1./polygon) * math.sin(math.radians(fix_angle))], 
+                            [(-1./polygon) * math.sin(math.radians(fix_angle + 180.)), (-1./polygon) * math.cos(math.radians(fix_angle))]])           
+            if x2 <= x1 and y2 >= y1:
+                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle + 180.)), (-1./polygon) * math.sin(math.radians(fix_angle + 180.))], 
+                            [(-1./polygon) * math.sin(math.radians(fix_angle + 180.)), (-1./polygon) * math.cos(math.radians(fix_angle + 180.))]])
+            if x2 >= x1 and y2 >= y1:
+                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle)), (-1./polygon) * math.sin(math.radians(fix_angle + 180.))], 
+                            [(-1./polygon) * math.sin(math.radians(fix_angle)), (-1./polygon) * math.cos(math.radians(fix_angle + 180.))]])
+            
+            x = np.matrix([[abs(x1-x2)], [abs(y1-y2)]])
+            b = np.matrix([[p[i-1][0]], [p[i-1][1]]])
+            p[i] = (A * x + b).reshape((2,))
+
+    #pygame.draw.line(window, green, [x1, y1], [x2, y2], 2)
+    
+    if level == 1:
+        pygame.draw.line(window, green, [x1, y1], p[0], 2)
+        for pol in range(polygon-1):
+            pygame.draw.line(window, green, p[pol], p[pol+1], 2)
+        #pygame.draw.line(window, green, p[1], p[2], 2)
+        pygame.draw.line(window, green, p[2], [x2, y2], 2)
+
+    if(level > 0):
+        level -= 1
+        Fractal(x1, y1, p[0][0], p[0][1], polygon, level)
+        for pol in range(polygon-1):
+            Fractal(p[pol][0], p[pol][1], p[pol+1][0], p[pol+1][1], polygon, level)
+        #Fractal(p[1][0], p[1][1], p[2][0], p[2][1], polygon, level)
+        Fractal(p[2][0], p[2][1], x2, y2, polygon, level)
+    
+        
+            
 
 def get_distance(x1,y1,x2,y2):
     return cmath.sqrt((x1-x2)*(x1-x2)-(y1-y2)*(y1-y2))
 
-n = 2
-for i in range(n):
-    sel.append(0)
-coorArrX = [100, 700]
-coorArrY = [300, 300]
 
 gameLoop = True
 while(gameLoop):
@@ -72,10 +110,13 @@ while(gameLoop):
     mfont = pygame.font.SysFont('Arial', 24, 1)
     pt1 = mfont.render(str((coorArrX[0], coorArrY[0])), 0, (0, 0, 0))
     pt2 = mfont.render(str((coorArrX[1], coorArrY[1])), 0, (0, 0, 0))
+    m = mfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
+    window.blit(m, (300, 0))
     window.blit(pt1, (0, 0))
     window.blit(pt2, (680, 0))
 
-    pygame.draw.line(window, green, (coorArrX[0], coorArrY[0]), (coorArrX[n-1], coorArrY[n-1]), 1)
+    #pygame.draw.line(window, green, (coorArrX[0], coorArrY[0]), (coorArrX[n-1], coorArrY[n-1]), 1)
+    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 3, 3)
 
     for p in range(n):
         x = coorArrX[p]
