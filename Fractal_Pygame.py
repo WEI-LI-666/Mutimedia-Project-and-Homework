@@ -17,8 +17,20 @@ sel = []
 sel1=0
 sel2=0
 
-def mdPt(x1, x2, y1, y2, n):
-    return ((x1 + x2) / 2.0, (y1 + y2) / 2.0)
+def Fractal(x1, x2, y1, y2, polygon, level):
+    pt = np.zeros((5, 2))
+    if polygon < 3:
+        polygon = 0
+    if level < 2:
+        level = 0
+    pt[0] = [x1, y1]
+    pt[polygon + 1] = [x2, y2]
+    for i in range(1, polygon):
+        pt[i] = (pt[0] + pt[polygon+1]) * (1.0/polygon) * i
+    if polygon == 0 or level == 0:
+        pygame.draw.line(window, green, pt[0], pt[polygon+1], 1)
+
+    return Fractal(p[0])
 
 def get_distance(x1,y1,x2,y2):
     return cmath.sqrt((x1-x2)*(x1-x2)-(y1-y2)*(y1-y2))
