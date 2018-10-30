@@ -22,12 +22,13 @@ for i in range(n):
     sel.append(0)
     
 coorArrX = [100, 700]
-coorArrY = [300, 300]
+coorArrY = [450, 450]
 
 def Fractal(x1, y1, x2, y2, polygon, level):
     p = np.zeros((polygon, 2))
     angle = (polygon - 2) * 180.
-    fix_angle = float(angle / polygon)
+    in_angle = float(angle / polygon)
+    fix_angle = in_angle
     if polygon < 3:
         polygon = 0
     if polygon == 0 or level == 0:
@@ -39,21 +40,24 @@ def Fractal(x1, y1, x2, y2, polygon, level):
         if i == polygon - 1:
             p[i] = [(x1 + 2. * x2) / 3., (y1 + 2. * y2) / 3.]
         if i != 0 and i != polygon - 1:
-            A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle)), (-1./polygon) * math.sin(math.radians(fix_angle))], 
-                            [(-1./polygon) * math.sin(math.radians(fix_angle)), (-1./polygon) * math.cos(math.radians(fix_angle))]])
+            A = np.matrix([[(1./3) * math.cos(math.radians(fix_angle)), (-1./3) * math.sin(math.radians(fix_angle))], 
+                            [(-1./3) * math.sin(math.radians(fix_angle)), (-1./3) * math.cos(math.radians(fix_angle))]])
             if x2 <= x1 and y2 <= y1:
-                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle + 180.)), (-1./polygon) * math.sin(math.radians(fix_angle))], 
-                            [(-1./polygon) * math.sin(math.radians(fix_angle + 180.)), (-1./polygon) * math.cos(math.radians(fix_angle))]])           
+                A = np.matrix([[(1./3) * math.cos(math.radians(fix_angle + 180.)), (-1./3) * math.sin(math.radians(fix_angle))], 
+                            [(-1./3) * math.sin(math.radians(fix_angle + 180.)), (-1./3) * math.cos(math.radians(fix_angle))]])           
             if x2 <= x1 and y2 >= y1:
-                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle + 180.)), (-1./polygon) * math.sin(math.radians(fix_angle + 180.))], 
-                            [(-1./polygon) * math.sin(math.radians(fix_angle + 180.)), (-1./polygon) * math.cos(math.radians(fix_angle + 180.))]])
+                A = np.matrix([[(1./3) * math.cos(math.radians(fix_angle + 180.)), (-1./3) * math.sin(math.radians(fix_angle + 180.))], 
+                            [(-1./3) * math.sin(math.radians(fix_angle + 180.)), (-1./3) * math.cos(math.radians(fix_angle + 180.))]])
             if x2 >= x1 and y2 >= y1:
-                A = np.matrix([[(1./polygon) * math.cos(math.radians(fix_angle)), (-1./polygon) * math.sin(math.radians(fix_angle + 180.))], 
-                            [(-1./polygon) * math.sin(math.radians(fix_angle)), (-1./polygon) * math.cos(math.radians(fix_angle + 180.))]])
+                A = np.matrix([[(1./3) * math.cos(math.radians(fix_angle)), (-1./3) * math.sin(math.radians(fix_angle + 180.))], 
+                            [(-1./3) * math.sin(math.radians(fix_angle)), (-1./3) * math.cos(math.radians(fix_angle + 180.))]])
             
-            x = np.matrix([[abs(x1-x2)], [abs(y1-y2)]])
+            x = np.matrix([[float(abs(x1-x2))], [float(abs(y1-y2))]])
             b = np.matrix([[p[i-1][0]], [p[i-1][1]]])
             p[i] = (A * x + b).reshape((2,))
+
+            fix_angle -= 180. - fix_angle
+            if fix_angle < -90.: fix_angle += 90.
 
     #pygame.draw.line(window, green, [x1, y1], [x2, y2], 2)
     
@@ -61,16 +65,14 @@ def Fractal(x1, y1, x2, y2, polygon, level):
         pygame.draw.line(window, green, [x1, y1], p[0], 2)
         for pol in range(polygon-1):
             pygame.draw.line(window, green, p[pol], p[pol+1], 2)
-        #pygame.draw.line(window, green, p[1], p[2], 2)
-        pygame.draw.line(window, green, p[2], [x2, y2], 2)
+        pygame.draw.line(window, green, p[polygon-1], [x2, y2], 2)  
 
     if(level > 0):
         level -= 1
         Fractal(x1, y1, p[0][0], p[0][1], polygon, level)
         for pol in range(polygon-1):
             Fractal(p[pol][0], p[pol][1], p[pol+1][0], p[pol+1][1], polygon, level)
-        #Fractal(p[1][0], p[1][1], p[2][0], p[2][1], polygon, level)
-        Fractal(p[2][0], p[2][1], x2, y2, polygon, level)
+        Fractal(p[polygon-1][0], p[polygon-1][1], x2, y2, polygon, level)
     
         
             
@@ -116,7 +118,7 @@ while(gameLoop):
     window.blit(pt2, (680, 0))
 
     #pygame.draw.line(window, green, (coorArrX[0], coorArrY[0]), (coorArrX[n-1], coorArrY[n-1]), 1)
-    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 4, 3)
+    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 4, 2)
 
     for p in range(n):
         x = coorArrX[p]
