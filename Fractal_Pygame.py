@@ -80,7 +80,6 @@ def Fractal(x1, y1, x2, y2, polygon, level):
 def get_distance(x1,y1,x2,y2):
     return cmath.sqrt((x1-x2)*(x1-x2)-(y1-y2)*(y1-y2))
 
-
 gameLoop = True
 while(gameLoop):
     mouse_pressed=0 #reset mouse button
