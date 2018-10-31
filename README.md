@@ -12,7 +12,7 @@
 ------------------------------------------------------------------
 ## Fractal_Pygame.py
 - **Language** => Python 2.7.15
-- **Module Requirment** => pygame
+- **Module Requirment** => pygame, InputBox.py
 - **Environment** => .py for any Platform, .exe for Windows 64bits
 ------------------------------------------------------------------
 **Introduction:**
