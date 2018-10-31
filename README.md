@@ -1,5 +1,7 @@
 # Mutimedia-Project-and-Homework
 ------------------------------------------------------------------
+## "*********EXE FILE DIDN'T UPDATE, GO FOR THE CODE FIRST*********" ##
+------------------------------------------------------------------
 ## Bezier_Pygame.py
 - **Language** => Python 2.7.15
 - **Module Requirment** => pygame
