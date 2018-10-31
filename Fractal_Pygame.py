@@ -9,6 +9,8 @@ green = (0,255,0)
 black = (0,0,0)
 red = (255,0,0)
 blue = (0,0,255)
+yellow = (255, 185, 0)
+bright_yellow = (255, 220, 0)
 white = (255, 255, 255)
 mouse_pos = pygame.mouse.get_pos()
 diameter=5
@@ -16,6 +18,11 @@ mouse_pressed=0
 sel = []
 sel1=0
 sel2=0
+count=0
+textP=""
+P_entered = 0
+textL=""
+L_entered = 0
 
 n = 2
 for i in range(n):
@@ -24,16 +31,38 @@ for i in range(n):
 coorArrX = [100, 700]
 coorArrY = [450, 450]
 
+def display_box(window, text):
+    font = pygame.font.Font(None, 18)
+    Pol_box = pygame.Rect(0, 0, 220, 22)
+
+    win_center = window.get_rect().center
+    Pol_box.center = win_center
+    Pol_box.bottom = 600
+
+    pygame.draw.rect(window, (0, 0, 0), Pol_box, 0)
+    pygame.draw.rect(window, (255, 255, 255), Pol_box, 1)
+
+    Pol_box.top += 3
+    Pol_box.left += 3
+
+    if len(text) != 0:
+        window.blit(font.render(text, 1, white), Pol_box.topleft)
+
+    #pygame.display.flip()
+
+
 def Fractal(x1, y1, x2, y2, polygon, level):
+    
+    if polygon < 3:
+        polygon = 1
+    if polygon == 1 or level == 0:
+        pygame.draw.line(window, green, [x1, y1], [x2,y2], 2)
     p = np.zeros((polygon, 2))
     angle = (polygon - 2) * 180.
     in_angle = float(angle / polygon)
     fix_angle = in_angle
-    if polygon < 3:
-        polygon = 0
-    if polygon == 0 or level == 0:
-        pygame.draw.line(window, green, [x1, y1], [x2,y2], 2)
-
+    dx_angle = 180. - in_angle
+    
     for i in range(polygon):
         if i == 0:
             p[i] = [(2. * x1 + x2) / 3., (2. * y1 + y2) / 3.]
@@ -56,10 +85,7 @@ def Fractal(x1, y1, x2, y2, polygon, level):
             b = np.matrix([[p[i-1][0]], [p[i-1][1]]])
             p[i] = (A * x + b).reshape((2,))
 
-            fix_angle -= 180. - fix_angle
-            if fix_angle < -90.: fix_angle += 90.
-
-    #pygame.draw.line(window, green, [x1, y1], [x2, y2], 2)
+            fix_angle -= dx_angle
     
     if level == 1:
         pygame.draw.line(window, green, [x1, y1], p[0], 2)
@@ -80,6 +106,7 @@ def Fractal(x1, y1, x2, y2, polygon, level):
 def get_distance(x1,y1,x2,y2):
     return cmath.sqrt((x1-x2)*(x1-x2)-(y1-y2)*(y1-y2))
 
+display_box(window, "Polygon: " + textP)
 gameLoop = True
 while(gameLoop):
     mouse_pressed=0 #reset mouse button
@@ -92,6 +119,14 @@ while(gameLoop):
             mouse_pressed=1
         if (event.type == pygame.MOUSEBUTTONUP):
             mouse_pressed=-1
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                textP = textP[0:-1]
+            elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+                P_entered = 1
+                break
+            else:
+                textP += event.unicode.encode("ascii")
     
     if abs(get_distance(coorArrX[0],coorArrY[0],mouse_pos[0],mouse_pos[1])) < diameter:
         if mouse_pressed:
@@ -116,8 +151,14 @@ while(gameLoop):
     window.blit(pt1, (0, 0))
     window.blit(pt2, (680, 0))
 
-    #pygame.draw.line(window, green, (coorArrX[0], coorArrY[0]), (coorArrX[n-1], coorArrY[n-1]), 1)
-    Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], 4, 2)
+    display_box(window, "Polygon: " + textP)
+
+    if P_entered == 1:
+        if textP != None and len(textP) != 0:
+            if int(textP) > 10:
+                textP = "10"
+            Fractal(coorArrX[0], coorArrY[0], coorArrX[1], coorArrY[1], int(textP), 2)
+            #P_entered = 0
 
     for p in range(n):
         x = coorArrX[p]

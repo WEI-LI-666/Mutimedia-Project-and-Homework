@@ -24,7 +24,7 @@ sel3=0
 sel4=0
 count=0
 
-#n = random.randint(3, 6) # number of control points
+# number of control points
 n = 4
 coorArrX = np.zeros(n)
 coorArrY = np.zeros(n)
@@ -41,9 +41,6 @@ def clear_B():
     coorArrX.fill(0.)
     coorArrY.fill(0.)
 
-#coorArrX = [200, 300, 500, 600]
-#coorArrY = [300, 100, 500, 300]
-
 gameLoop = True
 while(gameLoop):
     mouse_pressed=0 #reset mouse button
@@ -54,7 +51,7 @@ while(gameLoop):
             gameLoop = False
         if (event.type == pygame.MOUSEBUTTONDOWN):
             mouse_pressed = 1
-            if count < 4 and mouse_pos[0] < 700 and mouse_pos[1] > 50:
+            if count < 4 and not (mouse_pos[0] > 700 and mouse_pos[1] < 50):
                 mouse_pressed=1
                 coorArrX[count] = mouse_pos[0]
                 coorArrY[count] = mouse_pos[1]
