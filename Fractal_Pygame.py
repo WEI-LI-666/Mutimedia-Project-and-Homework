@@ -1,4 +1,4 @@
-import random, pygame, cmath, math, sys, eztext
+import random, pygame, cmath, math, sys, InputBox
 import numpy as np
 
 pygame.init()
@@ -18,10 +18,10 @@ mouse_pressed=0
 sel1=0
 sel2=0
 count=0
-textP=""
-P_entered = 0
-textL=""
-L_entered = 0
+
+clock = pygame.time.Clock()
+inputP = InputBox.InputBox(725, 550-5)
+inputL = InputBox.InputBox(725, 575-5)
 
 n = 2
 sel = np.zeros(n)
@@ -29,28 +29,6 @@ coorArrX = np.zeros(n)
 coorArrY = np.zeros(n)
 pol = np.zeros(n, int)
 lev = np.zeros(n, int)
-
-pol[1] = 3
-lev[1] = 2
-
-def display_box(window, text):
-    font = pygame.font.Font(None, 18)
-    Pol_box = pygame.Rect(0, 0, 220, 22)
-
-    win_center = window.get_rect().center
-    Pol_box.center = win_center
-    Pol_box.bottom = 600
-
-    pygame.draw.rect(window, (0, 0, 0), Pol_box, 0)
-    pygame.draw.rect(window, (255, 255, 255), Pol_box, 1)
-
-    Pol_box.top += 3
-    Pol_box.left += 3
-
-    if len(text) != 0:
-        window.blit(font.render(text, 1, white), Pol_box.topleft)
-
-    #pygame.display.flip()
 
 
 def Fractal(x1, y1, x2, y2, polygon, level):
@@ -100,17 +78,14 @@ def Fractal(x1, y1, x2, y2, polygon, level):
         Fractal(x1, y1, p[0][0], p[0][1], polygon, level)
         for pol in range(polygon-1):
             Fractal(p[pol][0], p[pol][1], p[pol+1][0], p[pol+1][1], polygon, level)
-        Fractal(p[polygon-1][0], p[polygon-1][1], x2, y2, polygon, level)
-    
-        
-            
+        Fractal(p[polygon-1][0], p[polygon-1][1], x2, y2, polygon, level)       
 
 def get_distance(x1,y1,x2,y2):
     return cmath.sqrt((x1-x2)*(x1-x2)-(y1-y2)*(y1-y2))
 
-display_box(window, "Polygon: " + textP)
 gameLoop = True
 while(gameLoop):
+    #clock.tick(30)
     mouse_pressed=0 #reset mouse button
     window.fill(background_color) #redraw the screen
     mouse_pos = pygame.mouse.get_pos()#get mouse pos
@@ -118,36 +93,21 @@ while(gameLoop):
         if(event.type == pygame.QUIT):
             gameLoop = False
         if (event.type == pygame.MOUSEBUTTONDOWN):
-            mouse_pressed=1
-            if count >= 2:
-                coorArrX = np.append(coorArrX, [0])
-                coorArrY = np.append(coorArrY, [0])
-                sel = np.append(sel, [0])
-                pol = np.append(pol, [0])
-                lev = np.append(lev, [0])
-            coorArrX[count] = mouse_pos[0]
-            coorArrY[count] = mouse_pos[1]
-            count += 1
+            if not (mouse_pos[0] > 650 and mouse_pos[0] < 800 and mouse_pos[1] > 545 and mouse_pos[1] < 600):
+                mouse_pressed=1
+                if count >= 2:
+                    coorArrX = np.append(coorArrX, [0])
+                    coorArrY = np.append(coorArrY, [0])
+                    sel = np.append(sel, [0])
+                    pol = np.append(pol, [0])
+                    lev = np.append(lev, [0])
+                coorArrX[count] = mouse_pos[0]
+                coorArrY[count] = mouse_pos[1]
+                count += 1
         if (event.type == pygame.MOUSEBUTTONUP):
             mouse_pressed=-1
-        if event.type == pygame.KEYDOWN:
-            '''if event.key == pygame.K_BACKSPACE:
-                textP = textP[0:-1]
-                P_entered = 0
-            elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
-                P_entered = 1
-                break
-            else:
-                textP += event.unicode.encode("ascii")
-            '''
-            if event.key == pygame.K_UP:
-                lev[1] += 1
-            if event.key == pygame.K_DOWN:
-                lev[1] -= 1
-            if event.key == pygame.K_RIGHT:
-                pol[1] += 1
-            if event.key == pygame.K_LEFT:
-                pol[1] -= 1
+        inputP.handle_event(event)
+        inputL.handle_event(event) 
 
     for i in range(count):
         if abs(get_distance(coorArrX[i],coorArrY[i],mouse_pos[0],mouse_pos[1])) < diameter:
@@ -157,21 +117,6 @@ while(gameLoop):
             coorArrX[i], coorArrY[i] = mouse_pos
             if mouse_pressed == -1:
                 sel[i]=0
-
-    '''if abs(get_distance(coorArrX[0],coorArrY[0],mouse_pos[0],mouse_pos[1])) < diameter:
-        if mouse_pressed:
-            sel[0]=1
-    if abs(get_distance(coorArrX[1],coorArrY[1],mouse_pos[0],mouse_pos[1])) < diameter:
-        if mouse_pressed:
-            sel[1]=1
-    if sel[0]==1:
-        coorArrX[0], coorArrY[0] = mouse_pos
-        if mouse_pressed ==-1 :
-            sel[0]=0
-    if sel[1]==1:
-        coorArrX[1], coorArrY[1] = mouse_pos
-        if mouse_pressed ==-1 :
-            sel[1]=0'''
     
     mfont = pygame.font.SysFont('Arial', 20, 1)
     pt1 = mfont.render(str((coorArrX[0], coorArrY[0])), 0, (0, 0, 0))
@@ -181,24 +126,34 @@ while(gameLoop):
     window.blit(pt1, (0, 0))
     window.blit(pt2, (680, 0))
 
-    display_box(window, "Polygon: " + textP)
+    tfont = pygame.font.SysFont(None, 24, 1)
+    tPol = tfont.render("Polygon: ", True, (0, 0, 0))
+    tLev = tfont.render("Level: ", True, (0, 0, 0))
+    window.blit(tPol, (650, 550))
+    window.blit(tLev, (674, 575))
 
-    '''if P_entered == 1:
+    inputP.draw(window)
+    inputL.draw(window)
+    textP = inputP.text_buf
+    textL = inputL.text_buf
+
+    if inputP.entered:
         if textP != None and len(textP) != 0:
             pol[count-1] = int(textP)
             if pol[count-1] > 10:
-                textP = "10"
                 pol[count-1] = 10
-                textP=""
+            inputP.entered = False
+
+    if inputL.entered:
+        if textL != None and len(textL) != 0:
+            lev[count-1] = int(textL)
+            if lev[count-1] > 10:
+                lev[count-1] = 10
+            inputL.entered = False
     
     for i in range(count):
         if i >= 1:
-            Fractal(coorArrX[i-1], coorArrY[i-1], coorArrX[i], coorArrY[i], pol[1], 2)
-    '''
-
-    
-    i = 1
-    Fractal(coorArrX[i-1], coorArrY[i-1], coorArrX[i], coorArrY[i], pol[1], lev[1])
+            Fractal(coorArrX[i-1], coorArrY[i-1], coorArrX[i], coorArrY[i], pol[i], lev[i])
 
     for p in range(count):
         x = coorArrX[p]
@@ -207,6 +162,7 @@ while(gameLoop):
             pygame.draw.circle(window, red, (int(x), int(y)), diameter, 0)
         except:
             pass
-    #print count
+    
     pygame.display.flip()
+    clock.tick(60)
 pygame.quit()
