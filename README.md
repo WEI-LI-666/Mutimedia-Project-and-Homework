@@ -5,7 +5,7 @@
 - **Module Requirment** => pygame
 - **Environment** => .py for any Platform, .exe for Windows 64bits
 ------------------------------------------------------------------
-**Introduction**
+**Introduction:**
 
 ------------------------------------------------------------------
 ## Fractal_Pygame.py
@@ -13,4 +13,4 @@
 - **Module Requirment** => pygame
 - **Environment** => .py for any Platform, .exe for Windows 64bits
 ------------------------------------------------------------------
-**Introduction**
+**Introduction:**
