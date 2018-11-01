@@ -1,6 +1,6 @@
 # Mutimedia-Project-and-Homework
 ------------------------------------------------------------------
-## "*********EXE FILES UPDATE, GO AND CHECK IT OUT!*********" ##
+## "*********EXE FILES UPDATE, GO AND CHECK IT OUT*********" ##
 - **Path:** /ExeFile/dist/
 ------------------------------------------------------------------
 ## Bezier_Pygame.py
