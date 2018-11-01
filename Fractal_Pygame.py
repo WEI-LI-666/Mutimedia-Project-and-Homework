@@ -93,7 +93,7 @@ while(gameLoop):
         if(event.type == pygame.QUIT):
             gameLoop = False
         if (event.type == pygame.MOUSEBUTTONDOWN):
-            if not (mouse_pos[0] > 650 and mouse_pos[0] < 800 and mouse_pos[1] > 545 and mouse_pos[1] < 600):
+            if not (mouse_pos[0] > 625 and mouse_pos[0] < 800 and mouse_pos[1] > 545 and mouse_pos[1] < 600):
                 mouse_pressed=1
                 if count >= 2:
                     coorArrX = np.append(coorArrX, [0])
@@ -117,25 +117,19 @@ while(gameLoop):
             coorArrX[i], coorArrY[i] = mouse_pos
             if mouse_pressed == -1:
                 sel[i]=0
-    
-    mfont = pygame.font.SysFont('Arial', 20, 1)
-    pt1 = mfont.render(str((coorArrX[0], coorArrY[0])), 0, (0, 0, 0))
-    pt2 = mfont.render(str((coorArrX[1], coorArrY[1])), 0, (0, 0, 0))
-    m = mfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
-    window.blit(m, (300, 0))
-    window.blit(pt1, (0, 0))
-    window.blit(pt2, (680, 0))
-
-    tfont = pygame.font.SysFont(None, 24, 1)
-    tPol = tfont.render("Polygon: ", True, (0, 0, 0))
-    tLev = tfont.render("Level: ", True, (0, 0, 0))
-    window.blit(tPol, (650, 550))
-    window.blit(tLev, (674, 575))
 
     inputP.draw(window)
     inputL.draw(window)
     textP = inputP.text_buf
     textL = inputL.text_buf
+
+    tfont = pygame.font.SysFont(None, 24, 1)
+    tPol = tfont.render("Polygon: " + textP, 1, (0, 0, 0))
+    tLev = tfont.render("Level: " + textL, 1, (0, 0, 0))
+    mp = tfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
+    window.blit(tPol, (625, 550))
+    window.blit(tLev, (649, 575))
+    window.blit(mp, (300, 0))
 
     if inputP.entered:
         if textP != None and len(textP) != 0:
