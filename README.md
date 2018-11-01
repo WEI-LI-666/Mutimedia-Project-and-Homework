@@ -1,6 +1,7 @@
 # Mutimedia-Project-and-Homework
 ------------------------------------------------------------------
-## "*********EXE FILE DIDN'T UPDATE YET, GO FOR THE CODE FIRST*********" ##
+## "*********EXE FILES UPDATE, GO AND CHECK IT OUT!*********" ##
+- **Path: **/ExeFile/dist/
 ------------------------------------------------------------------
 ## Bezier_Pygame.py
 - **Language** => Python 2.7.15
