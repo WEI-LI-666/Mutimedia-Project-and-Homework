@@ -5,10 +5,10 @@
 ------------------------------------------------------------------
 ## Bezier_Pygame.py
 - **Programming Language** => Python 2.7.15
-- **Module Requirment** => <pre>If you don't have modules below, go pip install it.
+- **Module Requirements** => <pre>If you don't have modules below, go pip install it.
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5</pre>
-- **Environment / OS** => .py for any Platform(GUI), .exe for Windows 64bits
+- **Environment / OS** => .py for any Platform (GUI), .exe for Windows 64bits
 ------------------------------------------------------------------
 **Introduction:**
 <ul>
@@ -24,11 +24,11 @@
 ------------------------------------------------------------------
 ## Fractal_Pygame.py
 - **Programming Language** => Python 2.7.15
-- **Module Requirment** => <pre>If you don't have modules below, go pip install it.
+- **Module Requirements** => <pre>If you don't have modules below, go pip install it.
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5
                             - InputBox.py (Make sure put it in the same directory)</pre>
-- **Environment / OS** => .py for any Platform(GUI), .exe for Windows 64bits
+- **Environment / OS** => .py for any Platform (GUI), .exe for Windows 64bits
 
 ------------------------------------------------------------------
 **Introduction:**
@@ -38,7 +38,7 @@
   <ul>
     <li> Don't be worry after pressing enter and the text disappear, it will save in a buffer(and on the left of the inputbox).
   </ul>
-  <li> 3) Then the line between two dot will change, if work correctly.
+  <li> 3) Then the line between two dots will change, if work correctly.
   <ul>
     <li> You can **Drag** any red dot to change the size and the position of the **Fractal Line**.
   </ul>  
