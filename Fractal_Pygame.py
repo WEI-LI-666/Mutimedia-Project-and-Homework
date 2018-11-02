@@ -18,6 +18,8 @@ mouse_pressed=0
 sel1=0
 sel2=0
 count=0
+textP=""
+textL=""
 
 clock = pygame.time.Clock()
 inputP = InputBox.InputBox(725, 550-5)
@@ -93,7 +95,8 @@ while(gameLoop):
         if(event.type == pygame.QUIT):
             gameLoop = False
         if (event.type == pygame.MOUSEBUTTONDOWN):
-            if not (mouse_pos[0] > 625 and mouse_pos[0] < 800 and mouse_pos[1] > 545 and mouse_pos[1] < 600):
+            if not (mouse_pos[0] > 625 and mouse_pos[0] < 800 and mouse_pos[1] > 545 and mouse_pos[1] < 600     # window's top-right and bottom-right won't do anything
+                    or mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 0 and mouse_pos[1] < 145):
                 mouse_pressed=1
                 if count >= 2:
                     coorArrX = np.append(coorArrX, [0])
@@ -104,8 +107,23 @@ while(gameLoop):
                 coorArrX[count] = mouse_pos[0]
                 coorArrY[count] = mouse_pos[1]
                 count += 1
+            if (mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 0 and mouse_pos[1] < 45):
+                coorArrX = np.zeros(n)
+                coorArrY = np.zeros(n)
+                count=0
+            if (mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 50 and mouse_pos[1] < 95):
+                pol[count-1]=0
+                lev[count-1]=0
+            if (mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 100 and mouse_pos[1] < 145):
+                if count > 2:
+                    coorArrX = np.delete(coorArrX, -1, 0)
+                    coorArrY = np.delete(coorArrY, -1, 0)
+                else:
+                    coorArrX[count-1] = 0.
+                    coorArrY[count-1] = 0.
+                count -= 1
         if (event.type == pygame.MOUSEBUTTONUP):
-            mouse_pressed=-1
+            mouse_pressed = -1
         inputP.handle_event(event)
         inputL.handle_event(event) 
 
@@ -123,13 +141,32 @@ while(gameLoop):
     textP = inputP.text_buf
     textL = inputL.text_buf
 
+    if 700+100 > mouse_pos[0] > 700 and 0+45 > mouse_pos[1] > 0:
+        pygame.draw.rect(window, bright_yellow,(700,0,100,45))
+    else:
+        pygame.draw.rect(window, yellow,(700,0,100,45))
+    if 700+100 > mouse_pos[0] > 700 and 50+45 > mouse_pos[1] > 50:
+        pygame.draw.rect(window, bright_yellow,(700,50,100,45))
+    else:
+        pygame.draw.rect(window, yellow,(700,50,100,45))
+    if 700+100 > mouse_pos[0] > 700 and 100+45 > mouse_pos[1] > 100:
+        pygame.draw.rect(window, bright_yellow,(700,100,100,45))
+    else:
+        pygame.draw.rect(window, yellow,(700,100,100,45))
+
     tfont = pygame.font.SysFont(None, 24, 1)
     tPol = tfont.render("Polygon: " + textP, 1, (0, 0, 0))
     tLev = tfont.render("Level: " + textL, 1, (0, 0, 0))
+    clearText = tfont.render(str("Clear"), 0, (0, 0, 0))    # clear all lines and coordinates
+    resetText = tfont.render(str("Reset"), 0, (0, 0, 0))    # set current fractal shape to default(pol=0, level=0)
+    undoText = tfont.render(str("Undo"), 0, (0, 0, 0))     # remove latest coordinates and the fractal
     mp = tfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
     window.blit(tPol, (625, 550))
     window.blit(tLev, (649, 575))
-    window.blit(mp, (300, 0))
+    window.blit(mp, (300, 5))
+    window.blit(clearText, (725, 15))
+    window.blit(resetText, (725, 65))
+    window.blit(undoText, (725, 115))
 
     if inputP.entered:
         if textP != None and len(textP) != 0:

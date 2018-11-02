@@ -23,6 +23,7 @@ sel2=0
 sel3=0
 sel4=0
 count=0
+clock = pygame.time.Clock()
 
 # number of control points
 n = 4
@@ -108,14 +109,14 @@ while(gameLoop):
     else:
         pygame.draw.rect(window, yellow,(700,0,100,50))
 
-    mfont = pygame.font.SysFont('Arial', 20, 1)
-    pt1 = mfont.render(str(coorArrX), 0, (0, 0, 0))
-    pt2 = mfont.render(str(coorArrY), 0, (0, 0, 0))
+    mfont = pygame.font.SysFont(None, 24, 1)
+    pt1 = mfont.render("coorArrX: "+str(coorArrX), 0, (0, 0, 0))
+    pt2 = mfont.render("coorArrY: "+str(coorArrY), 0, (0, 0, 0))
     buttonText = mfont.render(str("Clear"), 0, (0, 0, 0))
     m = mfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
-    window.blit(buttonText, (725, 12.5))
+    window.blit(buttonText, (725, 15))
     window.blit(m, (300, 0))
-    window.blit(pt1, (0, 0))
+    window.blit(pt1, (0, 25))
     window.blit(pt2, (0, 50))
 
     for k in range(count):
@@ -127,4 +128,5 @@ while(gameLoop):
             pass
 
     pygame.display.flip()
+    clock.tick(60)
 pygame.quit()
