@@ -23,7 +23,6 @@ sel2=0
 sel3=0
 sel4=0
 count=0
-clock = pygame.time.Clock()
 
 # number of control points
 n = 4
@@ -128,5 +127,4 @@ while(gameLoop):
             pass
 
     pygame.display.flip()
-    clock.tick(60)
 pygame.quit()
