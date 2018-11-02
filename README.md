@@ -27,7 +27,7 @@
 - **Module Requirment** => <pre>If you don't have modules below, go pip install it.
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5
-                            - InputBox.py (in directory)</pre>
+                            - InputBox.py (Make sure put it in the same directory)</pre>
 - **Environment** => .py for any Platform, .exe for Windows 64bits
 
 ------------------------------------------------------------------
