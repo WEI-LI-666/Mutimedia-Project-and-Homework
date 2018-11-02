@@ -28,7 +28,7 @@
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5
                             - InputBox.py (Make sure put it in the same directory)</pre>
-- **Environment / OS** => .py for any Platform (GUI), .exe for Windows 64bits
+- **Environment / OS** => .py for any Platform (GUI), .exe (Currently not working) for Windows 64bits
 
 ------------------------------------------------------------------
 **Introduction:**
