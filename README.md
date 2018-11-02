@@ -31,7 +31,7 @@
   <li> 1) Draw two arbitrary points on a graph.
   <li> 2) Enter the "Polygon" and "Level" arguments, press "Return" after finish typeing for every input box.
   <ul>
-    <li> Don't be worry after pressing enter and the text disappear, it will save in a buffer.
+    <li> Don't be worry after pressing enter and the text disappear, it will save in a buffer(and on the left of the inputbox).
   </ul>
   <li> 3) Then the line between two dot will change, if work correctly.
   <ul>
