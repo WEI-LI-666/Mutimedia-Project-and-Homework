@@ -13,7 +13,7 @@
   <li> 1) Draw four arbitrary points on a graph.
   <li> 2) Then you will see the Bezier Curve according to the provided four points.
   <ul>
-    <li> 2.1) You can **Drag** any red dot to update the corresponding Bezier Curve accordingly.
+    <li> You can **Drag** any red dot to update the corresponding Bezier Curve accordingly.
   </ul> 
   <li> 4) Click the "Clear" button on the top-right corner to clean and reset the window.
   <li> 5) Repeat Step 1 to 4 if you prefer.
@@ -31,11 +31,11 @@
   <li> 1) Draw two arbitrary points on a graph.
   <li> 2) Enter the "Polygon" and "Level" arguments, press "Return" after finish typeing for every input box.
   <ul>
-    <li> 2.1) Don't be worry after pressing enter and the text disappear, it will save in a buffer.
+    <li> Don't be worry after pressing enter and the text disappear, it will save in a buffer.
   </ul>
   <li> 3) Then the line between two dot will change, if work correctly.
   <ul>
-    <li> 3.1) You can **Drag** any red dot to change the size and the position of the **Fractal Line**.
+    <li> You can **Drag** any red dot to change the size and the position of the **Fractal Line**.
   </ul>  
   <li> 4) Click on any other place to generate another **Fractal Line**
   <li> 5) Repeat Step 2 to 4, if you prefer
