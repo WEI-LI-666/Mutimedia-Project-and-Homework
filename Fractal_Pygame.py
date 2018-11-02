@@ -20,6 +20,7 @@ sel2=0
 count=0
 textP=""
 textL=""
+clock = pygame.time.Clock()
 
 inputP = InputBox.InputBox(725, 550-5)
 inputL = InputBox.InputBox(725, 575-5)
@@ -197,4 +198,5 @@ while(gameLoop):
             pass
     
     pygame.display.flip()
+    clock.tick(60)
 pygame.quit()
