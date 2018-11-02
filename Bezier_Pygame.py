@@ -1,7 +1,7 @@
 # Random Bezier Curve using De Casteljau's algorithm
 # http://en.wikipedia.org/wiki/Bezier_curve
 # http://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
-import random, pygame, cmath
+import pygame, cmath
 import numpy as np
 
 pygame.init()
@@ -51,12 +51,12 @@ while(gameLoop):
             gameLoop = False
         if (event.type == pygame.MOUSEBUTTONDOWN):
             mouse_pressed = 1
-            if count < 4 and not (mouse_pos[0] > 700 and mouse_pos[1] < 50):
+            if count < 4 and not (mouse_pos[0] > 700 and mouse_pos[1] < 45):
                 mouse_pressed=1
                 coorArrX[count] = mouse_pos[0]
                 coorArrY[count] = mouse_pos[1]
                 count += 1
-            if mouse_pos[0] > 700 and mouse_pos[1] < 50:
+            if mouse_pos[0] > 700 and mouse_pos[1] < 45:
                 count=0
                 clear_B()
         if (event.type == pygame.MOUSEBUTTONUP):
@@ -103,17 +103,17 @@ while(gameLoop):
             except:
                 pass
 
-    if 700+100 > mouse_pos[0] > 700 and 0+50 > mouse_pos[1] > 0:
-        pygame.draw.rect(window, bright_yellow,(700,0,100,50))
+    if 700+100 > mouse_pos[0] > 700 and 0+45 > mouse_pos[1] > 0:
+        pygame.draw.rect(window, bright_yellow,(700,0,100,45))
     else:
-        pygame.draw.rect(window, yellow,(700,0,100,50))
+        pygame.draw.rect(window, yellow,(700,0,100,45))
 
-    mfont = pygame.font.SysFont(None, 24, 1)
+    mfont = pygame.font.SysFont("Arial", 20, 1)
     pt1 = mfont.render("coorArrX: "+str(coorArrX), 0, (0, 0, 0))
     pt2 = mfont.render("coorArrY: "+str(coorArrY), 0, (0, 0, 0))
     buttonText = mfont.render(str("Clear"), 0, (0, 0, 0))
     m = mfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
-    window.blit(buttonText, (725, 15))
+    window.blit(buttonText, (730, 10))
     window.blit(m, (300, 0))
     window.blit(pt1, (0, 25))
     window.blit(pt2, (0, 50))

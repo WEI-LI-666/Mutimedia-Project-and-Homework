@@ -1,4 +1,4 @@
-import random, pygame, cmath, math, sys, InputBox
+import pygame, cmath, math, sys, InputBox
 import numpy as np
 
 pygame.init()
@@ -86,7 +86,6 @@ def get_distance(x1,y1,x2,y2):
 
 gameLoop = True
 while(gameLoop):
-    #clock.tick(30)
     mouse_pressed=0 #reset mouse button
     window.fill(background_color) #redraw the screen
     mouse_pos = pygame.mouse.get_pos()#get mouse pos
@@ -109,6 +108,8 @@ while(gameLoop):
             if (mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 0 and mouse_pos[1] < 45):
                 coorArrX = np.zeros(n)
                 coorArrY = np.zeros(n)
+                pol = np.zeros(n, int)
+                lev = np.zeros(n, int)
                 count=0
             if (mouse_pos[0] > 700 and mouse_pos[0] < 800 and mouse_pos[1] > 50 and mouse_pos[1] < 95):
                 pol[count-1]=0
@@ -120,6 +121,8 @@ while(gameLoop):
                 else:
                     coorArrX[count-1] = 0.
                     coorArrY[count-1] = 0.
+                pol[count-1]=0
+                lev[count-1]=0
                 count -= 1
         if (event.type == pygame.MOUSEBUTTONUP):
             mouse_pressed = -1
@@ -153,19 +156,19 @@ while(gameLoop):
     else:
         pygame.draw.rect(window, yellow,(700,100,100,45))
 
-    tfont = pygame.font.SysFont(None, 24, 1)
-    tPol = tfont.render("Polygon: " + textP, 1, (0, 0, 0))
-    tLev = tfont.render("Level: " + textL, 1, (0, 0, 0))
-    clearText = tfont.render(str("Clear"), 0, (0, 0, 0))    # clear all lines and coordinates
-    resetText = tfont.render(str("Reset"), 0, (0, 0, 0))    # set current fractal shape to default(pol=0, level=0)
-    undoText = tfont.render(str("Undo"), 0, (0, 0, 0))     # remove latest coordinates and the fractal
-    mp = tfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
-    window.blit(tPol, (625, 550))
-    window.blit(tLev, (649, 575))
+    mfont = pygame.font.SysFont("Arial", 20, 1)
+    tPol = mfont.render("Polygon: " + textP, 1, (0, 0, 0))
+    tLev = mfont.render("Level: " + textL, 1, (0, 0, 0))
+    clearText = mfont.render(str("Clear"), 0, (0, 0, 0))    # clear all lines and coordinates
+    resetText = mfont.render(str("Reset"), 0, (0, 0, 0))    # set current fractal shape to default(pol=0, level=0)
+    undoText = mfont.render(str("Undo"), 0, (0, 0, 0))     # remove latest coordinates and the fractal
+    mp = mfont.render("mouse pos: " + str((mouse_pos[0],mouse_pos[1])), 0, (0, 0, 0))
+    window.blit(tPol, (625, 545))
+    window.blit(tLev, (649, 570))
     window.blit(mp, (300, 5))
-    window.blit(clearText, (725, 15))
-    window.blit(resetText, (725, 65))
-    window.blit(undoText, (725, 115))
+    window.blit(clearText, (730, 10))
+    window.blit(resetText, (730, 60))
+    window.blit(undoText, (730, 110))
 
     if inputP.entered:
         if textP != None and len(textP) != 0:
