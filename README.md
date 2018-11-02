@@ -4,11 +4,11 @@
 - **Path:** /ExeFile/dist/
 ------------------------------------------------------------------
 ## Bezier_Pygame.py
-- **Language** => Python 2.7.15
+- **Programming Language** => Python 2.7.15
 - **Module Requirment** => <pre>If you don't have modules below, go pip install it.
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5</pre>
-- **Environment** => .py for any Platform, .exe for Windows 64bits
+- **Environment / OS** => .py for any Platform(GUI), .exe for Windows 64bits
 ------------------------------------------------------------------
 **Introduction:**
 <ul>
@@ -23,12 +23,12 @@
 
 ------------------------------------------------------------------
 ## Fractal_Pygame.py
-- **Language** => Python 2.7.15
+- **Programming Language** => Python 2.7.15
 - **Module Requirment** => <pre>If you don't have modules below, go pip install it.
                             - pygame >= 1.9.4 
                             - numpy >= 1.14.5
                             - InputBox.py (Make sure put it in the same directory)</pre>
-- **Environment** => .py for any Platform, .exe for Windows 64bits
+- **Environment / OS** => .py for any Platform(GUI), .exe for Windows 64bits
 
 ------------------------------------------------------------------
 **Introduction:**
